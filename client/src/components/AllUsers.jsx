@@ -1,5 +1,5 @@
 import { Table, TableHead, TableBody, TableRow, TableCell, styled, Button } from "@mui/material";
-import { getUsers } from "../service/api";
+import { getUsers, deleteUser } from "../service/api";
 import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -32,8 +32,13 @@ const AllUsers = () => {
 
   const getAllUsers = async () => {
     let response = await getUsers();
-    console.log(response.data);
+    // console.log(response.data);
     setUsers(response.data);
+  }
+
+  const deleteUserDetails = async (id) => {
+    await deleteUser(id);
+    getAllUsers();
   }
 
   return (
@@ -52,7 +57,7 @@ const AllUsers = () => {
         {
           users.map((user) => {
             return (
-              <StyledBodyTableRow>
+              <StyledBodyTableRow key={user.userId}>
                   <TableCell>{user.userId}</TableCell>
                   <TableCell>{user.name}</TableCell>
                   <TableCell>{user.username}</TableCell>
@@ -60,7 +65,7 @@ const AllUsers = () => {
                   <TableCell>{user.phone}</TableCell>
                   <TableCell>
                     <Button variant="contained" style={{ marginRight: 10 }} component={Link} to={`/edit/${user.userId}`}>Edit</Button>
-                    <Button variant="contained" color="secondary">Delete</Button>
+                    <Button variant="contained" color="secondary" onClick={() => deleteUserDetails(user.userId)}>Delete</Button>
                   </TableCell>
               </StyledBodyTableRow>
             )

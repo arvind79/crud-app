@@ -28,8 +28,16 @@ export const getUser = async (id) => {
 
 export const editUser = async (user, id) => {
   try {
-    return await axios.post(`${URL}/${id}`, user);
+    return await axios.put(`${URL}/${id}`, user);
   } catch (error) {
     console.log('Error while calling editUser api ', error);
+  }
+}
+
+export const deleteUser = async (id) => {
+  try {
+    return await axios.delete(`${URL}/${id}`);
+  } catch (error) {
+    console.log('Error while calling deleteUser api ', error);
   }
 }

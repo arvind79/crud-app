@@ -31,9 +31,9 @@ const EditUser = () => {
 
   const loadUserDetails = async () => {
     const response = await getUser(id);
-    console.log("response: ", response.data);
+    // console.log("response: ", response.data);
     setUser(response.data);
-    console.log(user);
+    // console.log(user);
   }
 
   const onValueChange = (e) => {

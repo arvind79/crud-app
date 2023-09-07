@@ -24,8 +24,8 @@ export const getUsers = async (request, response) => {
 export const getUser = async (request, response) => {
   // console.log(request.params.id);
   try {
-    const user = await User.find({ userId: request.params.id});
-    // const user = await user.findById(request.params.id);  //2nd method not workinng here don't know
+    const user = await User.findOne({ userId: request.params.id});
+    // const user = await user.findById(request.params.id);  //2nd method not working here don't know
     response.status(200).json(user);
   } catch (error) {
     response.status(404).json({ message: error.message });
@@ -37,8 +37,17 @@ export const editUser = async (request, response) => {
   const editUser = new User(user);
 
   try {
-    await user.updateOne({ userId: request.params.id }, editUser);
+    await User.updateOne({ userId: request.params.id }, editUser);
     response.status(201).json(editUser);
+  } catch (error) {
+    response.status(409).json({ message: error.message });
+  }
+}
+
+export const deleteUser = async (request, response) => {
+  try {
+    await User.deleteOne({ userId: request.params.id });
+    response.status(200).json({ message: 'User deleted successfully' });
   } catch (error) {
     response.status(409).json({ message: error.message });
   }
